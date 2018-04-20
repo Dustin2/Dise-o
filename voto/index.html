@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>das</title>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link rel="icon" href="imagenes/ICONO.jpg">
+<link rel="stylesheet" href="css/materialize.min.css">
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="js/materialize.min.js" ></script>
+</head>
+<body>
+	<header>
+		
+	</header>
+
+
+
+  <div class="navbar-fixed">
+<nav>
+    <div class="nav-wrapper #f44336 red">
+      <a href="index.html" class="brand-logo"> Votaciones </a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+<li><a href="sass.html">Inicio</a></li>
+        <li><a href="badges.html">Recientes</a></li>
+<li><a href="collapsible.html">Categorias</a></li>
+<li><a href="login.html">Registrarse</a></li>
+         <li><a class="dropdown-button" href="#!" data-activates="dropdown1">ajustes<a</li><i class="material-icons right">arrow_drop_down</i></a>
+  </div>
+</div>
+  <ul id="dropdown1" class="dropdown-content">
+  <li><a href="#!">preguntas frecuentes</a></li>
+  <li><a href="#!">Perfil</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">Cerrar Sesion</a></li>
+</ul>
+
+
+      <ul class="side-nav" id="mobile-demo">
+      
+      	<a class="waves-effect waves-light btn-small">Button</a>
+        <li><a href="">RECIENTES</a></li>
+        <li><a href="">CATEGORIAS</a></li>
+        <li><a href="">AJUSTES</a></li>
+ 
+      </ul>
+    </div>
+  </nav>
+		
+	<div class="slider">
+    <ul class="slides">
+      <li>
+        <img src="https://lorempixel.com/580/250/nature/1"> <!-- random image -->
+        <div class="caption center-align">
+          <h3>This is our big Tagline!</h3>
+          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        </div>
+      </li>
+      <li>
+        <img src="https://lorempixel.com/580/250/nature/2"> <!-- random image -->
+        <div class="caption left-align">
+          <h3>Left Aligned Caption</h3>
+          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        </div>
+      </li>
+      <li>
+        <img src="https://lorempixel.com/580/250/nature/3"> <!-- random image -->
+        <div class="caption right-align">
+          <h3>Right Aligned Caption</h3>
+          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        </div>
+      </li>
+      <li>
+        <img src="https://lorempixel.com/580/250/nature/4"> <!-- random image -->
+        <div class="caption center-align">
+          <h3>This is our big Tagline!</h3>
+          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+	</nav>
+	<aside>
+		<div id="rang" class="top3"></div>
+	</aside>
+	<section>
+		<div id="obras" class="contenedor"></div>
+	</section>
+	
+
+
+
+        <footer class="page-footer #f44336 red">
+          <div class="container ">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2014 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+          </div>
+        </footer>
+           
+
+
+
+
+
+
+	
+<div id="con_rang"><img src=""><h3></h3></div>
+
+<script>
+	function load() {
+		//ahax para votar
+		$.ajax({
+			url:'php/routePersonas.php',
+			type:'POST',
+			async: false,
+			data: {action: "encu"},
+			dataType:'JSON',
+			beforeSend: function(){
+				// showSpinner();
+			},
+			error: function(error){
+				console.log(error);
+			},
+			success: function(data){
+				console.log(data);
+				var sd =data.length;
+				var i=0;
+				$('#obras').html(function(){
+					$('#obras').empty();
+					for (var i = 0; i < sd; i++) {
+					$('#obras').append("<div id='con' class='contenedor_e'><div class='titulo'><h2>"+data[i][1]+"</h2></div><img src='"+data[i][2]+"' class='imagen'><div class='boton'><buttom id=boton' onclick='votar("+data[i][0]+")'>Votar</buttom></div></div>");
+					}
+				});
+			}
+		});
+
+		//ajax para el rancking
+		$.ajax({
+			url:'php/routePersonas.php',
+			type:'POST',
+			async: false,
+			data: {action: "ran"},
+			dataType:'JSON',
+			beforeSend: function(){
+				// showSpinner();
+			},
+			error: function(error){
+				console.log(error);
+			},
+			success: function(data){
+				console.log(data);
+				var sd =data.length;
+				var i=0;
+				$('#rang').html(function(){
+					$('#rang').empty();
+					for (var i = 0; i < sd; i++) {
+						$('#rang').append("<div id='con_rang' class='rank'><img src='"+data[i][1]+"'><h3>"+data[i][0]+"</h3></div>");
+					}
+				});
+			}
+		});
+	}
+	var user;
+	$(document).ready(function() {
+		
+		load();
+		user();
+
+
+
+	});
+	function votar(id) {
+		$.ajax({
+			url:'php/routePersonas.php',
+			type:'POST',
+			async: false,
+			data: {info:id,action: "voto"},
+			dataType:'JSON',
+			beforeSend: function(){
+				// showSpinner();
+			},
+			error: function(error){
+				console.log(error);
+			},
+			success: function(data){
+				console.log('exito');
+				load();
+			}
+		});
+	}
+
+	function user(){
+		
+		 $('#showlogin').click(function() {
+		      $('#loginpanel').slideToggle('fast', function() {
+		      });
+   		 });
+   		 $('#showregis').click(function() {
+		      $('#regisnpanel').slideToggle('fast', function() {
+		      });
+   		 });
+		$('#regis').click(function(){
+			var user=$('#use').val();
+			var pass=$('#pass').val();
+			if (user=="") {
+				console.log('error campo user vasio' );
+				return false;
+			}else{
+				if (pass=="") {
+					console.log('pass vasio');
+					return false;
+				}
+			}
+			console.log('registro correcto');
+			$.ajax({
+				url:'php/routePersonas.php',
+				type:'POST',
+				async: false,
+				data: {action:'login',pass:pass,user:user},
+				dataType:'JSON',
+				beforeSend: function(){
+					// showSpinner();
+				},
+				error: function(error){
+					console.log(error);
+				},
+				success: function(data){
+					console.log(data);
+					$('#user').empty();
+					$('#user').html("<label>"+data[0][1]+"</label><p></p>");
+				}
+				
+
+			});
+		});
+	}
+
+</script>
+
+<script src="js/jquery.min.js" ></script>
+
+</script>
+<script src="js/materialize.min.js"></script>
+<script> $(document).ready(function(){
+ $(".button-collapse").sideNav();
+});
+   $(document).ready(function(){
+      $('.slider').slider();
+    });
+        
+
+   
+</script>
+
+
+<div ></div>
+</body>
+</html>
